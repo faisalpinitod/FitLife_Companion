@@ -1,42 +1,120 @@
+// screens/UserProfileScreen.js
+// import React from 'react';
+// import { View, Text, Button } from 'react-native';
+
+// const UserProfileScreen = ({ navigation }) => {
+//   return (
+//     <View>
+//       <Text>User Profile Screen</Text>
+//       <Button
+//         title="Go back to Dashboard"
+//         onPress={() => navigation.navigate('Dashboard')}
+//       />
+//     </View>
+//   );
+// };
+
+// export default UserProfileScreen;
+
+
+
 import React, { useState } from 'react';
-import { View, Text, TextInput, Picker, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const UserProfileScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
+const UserProfileScreen = () => {
+  const [fullName, setFullName] = useState('');
   const [age, setAge] = useState('');
-  const [gender, setGender] = useState('male'); // Default value
+  const [gender, setGender] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
 
-  const handleSaveProfile = () => {
-    // Handle saving the profile data to the backend or local storage
-    // You can use APIs or state management libraries for this.
-    // After saving, navigate to the next screen.
-    navigation.navigate('GoalSetting'); // Change to your screen name
+  const navigation = useNavigation();
+
+  const handleSaveProfile = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/user/createUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName,
+          age,
+          gender,
+          height,
+          weight,
+          email,
+          contactNumber,
+        }),
+      });
+  
+      if (response.ok) {
+        // User profile saved successfully
+        navigation.navigate('GoalSettingScreen');
+      } else {
+        // Handle error response from the API
+        console.error('Error saving user profile');
+      }
+    } catch (error) {
+      // Handle any network or fetch related errors
+      console.error('Network error:', error);
+    }
   };
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>User Profile</Text>
+      <Text style={styles.header}>User Profile</Text>
       <TextInput
         style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
+        placeholder="Full Name"
+        value={fullName}
+        onChangeText={setFullName}
       />
       <TextInput
         style={styles.input}
         placeholder="Age"
-        keyboardType="numeric"
         value={age}
         onChangeText={setAge}
+        keyboardType="numeric"
       />
-      <Picker
+      <TextInput
         style={styles.input}
-        selectedValue={gender}
-        onValueChange={(itemValue) => setGender(itemValue)}>
-        <Picker.Item label="Male" value="male" />
-        <Picker.Item label="Female" value="female" />
-        <Picker.Item label="Other" value="other" />
-      </Picker>
+        placeholder="Gender"
+        value={gender}
+        onChangeText={setGender}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Height (cm)"
+        value={height}
+        onChangeText={setHeight}
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Weight (kg)"
+        value={weight}
+        onChangeText={setWeight}
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contact Number"
+        value={contactNumber}
+        onChangeText={setContactNumber}
+        keyboardType="phone-pad"
+      />
       <Button title="Save Profile" onPress={handleSaveProfile} />
     </View>
   );
@@ -45,21 +123,23 @@ const UserProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
-  heading: {
+  header: {
     fontSize: 24,
     marginBottom: 20,
-    textAlign: 'center',
   },
   input: {
-    marginBottom: 15,
-    padding: 10,
-    borderColor: '#ccc',
+    width: '80%',
+    height: 40,
     borderWidth: 1,
-    borderRadius: 5,
+    marginBottom: 20,
+    padding: 10,
   },
 });
 
 export default UserProfileScreen;
+
+

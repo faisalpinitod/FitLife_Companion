@@ -1,105 +1,92 @@
+// // navigation/AppNavigator.js
 // import React from 'react';
-// import { createStackNavigator } from '@react-navigation/stack';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import UserProfileScreen from '../screens/UserProfileScreen'; // Import your screen components
-// import GoalSettingScreen from '../screens/GoalSettingScreen';
-// import ActivityLoggingScreen from '../screens/ActivityLoggingScreen';
-// import ProgressTrackingScreen from '../screens/ProgressTrackingScreen';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import DashboardScreen from '../screens/DashboardScreen';
-
-// const Stack = createStackNavigator();
-// const Tab = createBottomTabNavigator();
-
-// const AppNavigator = () => {
-//   return (
-//     <Tab.Navigator>
-//       {/* Define your bottom tab screens */}
-      
-//       <Tab.Screen name="UserProfile" component={UserProfileScreen} />
-//       <Tab.Screen name="Dashboard" component={DashboardScreen} />
-//       <Tab.Screen name="GoalSetting" component={GoalSettingScreen} />
-//       <Tab.Screen name="ActivityLogging" component={ActivityLoggingScreen} />
-//       <Tab.Screen name="ProgressTracking" component={ProgressTrackingScreen} />
-      
-//     </Tab.Navigator>
-//   );
-// };
-
-// export default AppNavigator;
-
-
-
-
-
-// import React from 'react';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { NavigationContainer } from '@react-navigation/native';
 // import UserProfileScreen from '../screens/UserProfileScreen';
-// import GoalSettingScreen from '../screens/GoalSettingScreen';
-// import ActivityLoggingScreen from '../screens/ActivityLoggingScreen';
-// import ProgressTrackingScreen from '../screens/ProgressTrackingScreen';
-// import DashboardScreen from '../screens/DashboardScreen';
+// // import GoalSettingScreen from '../screens/GoalSettingScreen';
+// // import PlanListingScreen from '../screens/PlanListingScreen';
+// // import PlanDetailsScreen from '../screens/PlanDetailsScreen';
+// // import ActivityLogScreen from '../screens/ActivityLogScreen';
+// // import ProgressTrackingScreen from '../screens/ProgressTrackingScreen';
 
-// const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
+// const Stack = createStackNavigator();
 
-// const TabNavigator = () => {
+// const DashboardStack = () => {
 //   return (
-//     <Tab.Navigator>
-//       {/* Define your bottom tab screens */}
-//       <Tab.Screen name="UserProfile" component={UserProfileScreen} />
-//       <Tab.Screen name="GoalSetting" component={GoalSettingScreen} />
-//       <Tab.Screen name="ActivityLogging" component={ActivityLoggingScreen} />
-//       <Tab.Screen name="ProgressTracking" component={ProgressTrackingScreen} />
-//       <Tab.Screen name="Dashboard" component={DashboardScreen} />
-//     </Tab.Navigator>
+//     <Stack.Navigator>
+//       <Stack.Screen name="Dashboard" component={DashboardScreen} />
+//     </Stack.Navigator>
+//   );
+// };
+
+// const UserProfileStack = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+//     </Stack.Navigator>
 //   );
 // };
 
 // const AppNavigator = () => {
 //   return (
-//     <NavigationContainer>
-//       <Stack.Navigator initialRouteName="Tabs">
-//         {/* Stack Navigator for bottom tabs */}
-//         <Stack.Screen
-//           name="Tabs"
-//           component={TabNavigator}
-//           options={{ headerShown: false }} // Hide header for tab navigation
-//         />
-//         {/* Add more stack screens if needed */}
-//       </Stack.Navigator>
-//     </NavigationContainer>
+//     <Tab.Navigator>
+//       <Tab.Screen
+//         name="Dashboard"
+//         component={DashboardStack}
+//         options={{
+//           tabBarIcon: ({ color, size }) => (
+//             <MaterialCommunityIcons name="home" color={color} size={size} />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="UserProfile"
+//         component={UserProfileStack}
+//         options={{
+//           tabBarIcon: ({ color, size }) => (
+//             <MaterialCommunityIcons name="account" color={color} size={size} />
+//           ),
+//         }}
+//       />
+//       {/* Add more Tab.Screen components as needed */}
+//     </Tab.Navigator>
 //   );
 // };
 
 // export default AppNavigator;
-
-
-
-
-
 
 
 
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import TrainerListScreen from '../screens/TrainerListScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import DashboardScreen from '../screens/DashboardScreen';
+import ActivityLogScreen from '../screens/ActivityLogScreen';
+import ProgressTrackingScreen from '../screens/ProgressTrackingScreen';
+import GoalSettingScreen from '../screens/GoalSettingScreen';
+import PlanListingScreen from '../screens/PlanListingScreen';
+import PlanDetailsScreen from '../screens/PlanDetailsScreen';
+import UserProfileScreen from '../screens/UserProfileScreen';
 
-const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="TrainerList" component={TrainerListScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        
+        <Tab.Screen name="Profile" component={UserProfileScreen} />
+        <Tab.Screen name="Dashboard" component={DashboardScreen} />
+        <Tab.Screen name="Activity Log" component={ActivityLogScreen} />
+        <Tab.Screen name="Progress Tracking" component={ProgressTrackingScreen} />
+        <Tab.Screen name="Goal Setting" component={GoalSettingScreen} />
+        <Tab.Screen name="Plan Listing" component={PlanListingScreen} />
+        <Tab.Screen name="Plan Details" component={PlanDetailsScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };

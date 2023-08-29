@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const GoalSettingScreen = () => {
+const PlanDetailsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>GoalSettingScreen</Text>
+      <Text style={styles.text}>Plan Details Screen</Text>
     </View>
   );
 };
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoalSettingScreen;
+export default PlanDetailsScreen;

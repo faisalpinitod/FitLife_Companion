@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q@$tx0#$td_2i$ugh$!&=hvy4lx@d)&2t+fwuv7$@^db#gh#d5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition
@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Fitness',
     'corsheaders',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
+   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,11 +51,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+     'corsheaders.middleware.CorsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:19006",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:19006",
+# ]
 
 ROOT_URLCONF = 'FitLifeCompanion.urls'
 
@@ -75,7 +77,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FitLifeCompanion.wsgi.application'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGIN = ["http://localhost:8080",
+    "http://127.0.0.1:8080"]
+
+CORS_ALLOW_CREDENTIALS = False
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
