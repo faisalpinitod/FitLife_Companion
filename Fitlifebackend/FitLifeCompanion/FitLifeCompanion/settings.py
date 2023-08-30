@@ -77,10 +77,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FitLifeCompanion.wsgi.application'
 
-CORS_ALLOWED_ORIGIN = ["http://localhost:8080",
-    "http://127.0.0.1:8080"]
+CORS_ALLOWED_ORIGIN = ["http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:0800",]
 
-CORS_ALLOW_CREDENTIALS = False
+# CORS_ALLOW_CREDENTIALS = True
 
 
 # Database

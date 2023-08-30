@@ -5,9 +5,9 @@ const userRouter=express.Router()
 
 
 userRouter.post('/createUser' , async (req, res) => {
-    const {name,age,gender,height,weight,email,contactNumber}=req.body
+    const { username,age,gender,height,weight,email,contactNumber}=req.body
     try {
-      const newUser = new User({name,age,gender,height,weight,email,contactNumber});
+      const newUser = new User({username,age,gender,height,weight,email,contactNumber});
       const savedUser = await newUser.save();
       res.json(savedUser);
     } catch (error) {
