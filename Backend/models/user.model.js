@@ -7,9 +7,12 @@ const userSchema =  mongoose.Schema({
   height: Number,
   weight: Number,
   email: String,
-  contactNumber: String
+  contactNumber: String,
+  password:String
 });
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = {User};
+module.exports = {
+  User
+};

@@ -1,6 +1,8 @@
 
 
 const express=require("express")
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const {Trainer}=require('../models/trainers.model')
 
 const trainerRouter=express.Router()
@@ -8,84 +10,43 @@ const trainerRouter=express.Router()
 
 
 
+trainerRouter.post('/signup', async (req, res) => {
+  const { name, gender, specialization, experience, email, contactNumber, password } = req.body;
 
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newTrainer = new Trainer({
+      name, gender, specialization, experience, email, contactNumber, password: hashedPassword,
+    });
 
+    await newTrainer.save();
 
-
-
-
-
-// Create a new trainer
-trainerRouter.post('/trainers', async (req, res) => {
-    try {
-      const newTrainer = new Trainer(req.body);
-      const savedTrainer = await newTrainer.save();
-      res.status(201).json(savedTrainer);
-    } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
-  
-  // Get all trainers
-  trainerRouter.get('/trainers', async (req, res) => {
-    try {
-      const trainers = await Trainer.find();
-      res.json(trainers);
-    } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
-  
-  // Get a specific trainer by ID
-  trainerRouter.get('/trainers/:id', async (req, res) => {
-    try {
-      const trainerId = req.params.id;
-      const trainer = await Trainer.findById(trainerId);
-      if (trainer) {
-        res.json(trainer);
-      } else {
-        res.status(404).json({ error: 'Trainer not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
-  
-  // Update a trainer by ID
-  trainerRouter.put('/trainers/:id', async (req, res) => {
-    try {
-      const trainerId = req.params.id;
-      const updatedTrainer = req.body;
-      const trainer = await Trainer.findByIdAndUpdate(trainerId, updatedTrainer, {
-        new: true,
-      });
-      if (trainer) {
-        res.json(trainer);
-      } else {
-        res.status(404).json({ error: 'Trainer not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
-  
-  // Delete a trainer by ID
-  trainerRouter.delete('/trainers/:id', async (req, res) => {
-    try {
-      const trainerId = req.params.id;
-      const deletedTrainer = await Trainer.findByIdAndDelete(trainerId);
-      if (deletedTrainer) {
-        res.json(deletedTrainer);
-      } else {
-        res.status(404).json({ error: 'Trainer not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
-
-
-
-  module.exports={
-    trainerRouter
+    res.status(201).json({ message: 'Trainer registered successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to register trainer' });
   }
+});
+
+trainerRouter.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const trainer = await Trainer.findOne({ email });
+    if (!trainer) {
+      return res.status(401).json({ error: 'Authentication failed' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, trainer.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Authentication failed' });
+    }
+
+    const token = jwt.sign({ trainerId: trainer._id }, 'secret_key');
+
+    res.status(201).json({ "message":"Login Successful",token });
+  } catch (error) {
+    res.status(500).json({ error: 'Authentication failed' });
+  }
+});
+
+module.exports={trainerRouter}
