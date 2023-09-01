@@ -3,6 +3,7 @@ const progressTrackingRouter = express.Router();
 const { ProgressTracking } = require('../models/progress.model');
 
 // Create a new progress tracking entry
+
 progressTrackingRouter.post('/progressTracking', async (req, res) => {
   try {
     const newProgressTracking = new ProgressTracking(req.body);
@@ -15,6 +16,7 @@ progressTrackingRouter.post('/progressTracking', async (req, res) => {
 
 // Get all progress tracking entries for a user
 progressTrackingRouter.get('/progressTracking/:userId', async (req, res) => {
+
   const { userId } = req.params;
   try {
     const progressTrackingEntries = await ProgressTracking.find({ userId });
