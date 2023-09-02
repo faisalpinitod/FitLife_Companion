@@ -24,24 +24,25 @@ const StyledNavLink = styled(NavLink)`
 const NavigationBar = () => {
   return (
     <Nav>
-      <StyledNavLink to="/user-profile">
+      {/* <StyledNavLink to="/user-profile">
         <FontAwesomeIcon icon={faUser} /> User Profile
-      </StyledNavLink>
-      <StyledNavLink to="/user-login">
-        <FontAwesomeIcon icon={faChartLine} /> Login
-      </StyledNavLink>
-      <StyledNavLink to="/TrainerProfile">
-        <FontAwesomeIcon icon={faIdCard} /> Trainer Profile
-      </StyledNavLink>
-      <StyledNavLink to="/GoalSetting">
-        <FontAwesomeIcon icon={faBullseye} /> Goal Setting
-      </StyledNavLink>
+      </StyledNavLink> */}
       <StyledNavLink to="/workout-plan">
         <FontAwesomeIcon icon={faDumbbell} /> Workout Plan
       </StyledNavLink>
-      <StyledNavLink to="/WorkoutLog">
-        <FontAwesomeIcon icon={faClipboardList} /> Workout Log
+      <StyledNavLink to="/user-login">
+        <FontAwesomeIcon icon={faUser} /> Login
       </StyledNavLink>
+      {/* <StyledNavLink to="/TrainerProfile">
+        <FontAwesomeIcon icon={faIdCard} /> Trainer Profile
+      </StyledNavLink> */}
+      <StyledNavLink to="/GoalSetting">
+        <FontAwesomeIcon icon={faBullseye} /> Goal Setting
+      </StyledNavLink>
+      
+      {/* <StyledNavLink to="/WorkoutLog">
+        <FontAwesomeIcon icon={faClipboardList} /> Workout Log
+      </StyledNavLink> */}
       <StyledNavLink to="/nutritionplancreation">
         <FontAwesomeIcon icon={faAppleAlt} /> Nutrition Plan
       </StyledNavLink>
@@ -57,3 +58,45 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
+
+
+
+// import React from 'react';
+// import { Link } from 'react-router-dom';
+// // import './Navigation.css';
+
+// const Navigation = () => {
+//   return (
+//     <nav>
+//       <ul>
+//         <li>
+//           <Link to="/">
+//             StayNest
+//           </Link>
+//         </li>
+//         <li>
+//           <Link to="/">All Properties</Link>
+//         </li>
+//         <li>
+//           <Link to="/HostLogin">Host Login</Link>
+//         </li>
+
+//         <li>
+//           <Link to="/LoginSignup">Guest Login</Link>
+//         </li>
+
+//         <li>
+//           <Link to="/bookings">Bookings</Link>
+//         </li>
+
+//         <li className="search-bar">
+//           <input type="text" placeholder="Search" className="search-input" />
+          
+//         </li>
+        
+//       </ul>
+//     </nav>
+//   );
+// };
+
+// export default Navigation;

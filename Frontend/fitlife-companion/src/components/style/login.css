@@ -1,0 +1,113 @@
+.toggle-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .toggle-button {
+    background-color: #3182d6;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .toggle-button:hover {
+    background-color: #0056b3; /* Green when hovered */
+  }
+  
+  .user-profile-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-top: 20px;
+  }
+  
+  .user-profile-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input[type='email'],
+  .form-group input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-group button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3182d6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Add margin-top to separate it from other form elements */
+  }
+  
+  .form-group button:hover {
+    background-color: #0056b3; /* Darker blue when hovered */
+  }
+  
+  
+  .user-profile-container p {
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .user-profile-container {
+      max-width: 100%;
+      padding: 20px;
+    }
+  
+    .user-profile-container h2 {
+      font-size: 22px;
+    }
+  
+    .form-group input[type='email'],
+    .form-group input[type='password'],
+    .form-group select {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .form-group button {
+      font-size: 16px;
+      padding: 8px;
+    }
+  }
+  

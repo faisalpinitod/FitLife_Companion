@@ -14,8 +14,12 @@ function App() {
     
       
       <div>
+          {/* <div>
+            <p>Login</p>
+          </div> */}
         <NavigationBar />
         <Routes>
+        <Route path="/workout-plan" element={<WorkoutPlanCreation />} />
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/user-login" element={<Userlogin1 />} />
 

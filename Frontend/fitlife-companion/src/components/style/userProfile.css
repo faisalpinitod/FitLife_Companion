@@ -1,0 +1,82 @@
+/* Style for the user-profile-container */
+.user-profile-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8;
+  }
+  
+  /* Style for the user-profile-title */
+  .user-profile-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Style for form-group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Style for form-label */
+  .form-label {
+    display: block;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+  }
+  
+  /* Style for form-input */
+  .form-input {
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for form-button */
+  .form-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #3182d6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .form-button:hover {
+    background-color: #007bff;
+  }
+  
+  /* Media query for responsive design */
+  @media screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+    .user-profile-container {
+      max-width: 100%;
+      padding: 20px;
+    }
+  
+    .user-profile-title {
+      font-size: 22px;
+    }
+  
+    .form-input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .form-button {
+      font-size: 16px;
+      padding: 8px;
+    }
+  }
+  
