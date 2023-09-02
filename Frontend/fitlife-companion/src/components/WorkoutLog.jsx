@@ -54,20 +54,12 @@ const Button = styled.button`
 `;
 
 const WorkoutLogs = () => {
-  const [date, setDate] = useState('');
-  const [selectedPlan, setSelectedPlan] = useState('');
-  const [exercisesMeals, setExercisesMeals] = useState('');
-  const [durationCaloricIntake, setDurationCaloricIntake] = useState('');
+  const [data, setData] = useState('');
 
   const handleLogEntry = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      date,
-      selectedPlan,
-      exercisesMeals,
-      durationCaloricIntake,
-    };
+    
 
     try {
       const response = await fetch('http://localhost:8000/log/createLog', {
@@ -75,21 +67,28 @@ const WorkoutLogs = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         console.log('Log entry created successfully');
-        // You can redirect or perform any other action upon success
+    
       } else {
         console.error('Failed to create log entry');
-        // Handle error cases
+    
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      // Handle error cases
+      
     }
   };
+
+
+  const handleChange = (e)=>{
+    const {id,value}=e.target
+    setData({...data,[id]:value})
+  }
+
 
   return (
     <LogsContainer>
@@ -97,19 +96,19 @@ const WorkoutLogs = () => {
       <Form>
         <FormGroup>
           <Label>Date:</Label>
-          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <Input type="date" id="date"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Selected Plan:</Label>
-          <Input type="text" value={selectedPlan} onChange={(e) => setSelectedPlan(e.target.value)} />
+          <Input type="text"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Exercises/Meals:</Label>
-          <TextArea value={exercisesMeals} onChange={(e) => setExercisesMeals(e.target.value)} />
+          <TextArea id="exercises" onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Duration/Caloric Intake:</Label>
-          <Input type="text" value={durationCaloricIntake} onChange={(e) => setDurationCaloricIntake(e.target.value)} />
+          <Input type="text" id="duration"  onChange={handleChange} />
         </FormGroup>
         <Button onClick={handleLogEntry}>Log Entry</Button>
       </Form>

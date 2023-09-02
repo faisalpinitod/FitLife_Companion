@@ -54,42 +54,44 @@ const Button = styled.button`
 `;
 
 const WorkoutPlanCreation = () => {
-  const [planName, setPlanName] = useState('');
-  const [goal, setGoal] = useState('');
-  const [duration, setDuration] = useState('');
-  const [description, setDescription] = useState('');
+  const [data, setData] = useState('');
+
 
   const handleCreatePlan = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      planName,
-      goal,
-      duration,
-      description,
-    };
+
 
     try {
+      const authTokenTrainer = localStorage.getItem('authTokentrainer');
       const response = await fetch('http://localhost:8000/workoutPlan/createPlan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization':  authTokenTrainer,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         console.log('Workout plan created successfully');
-        // You can redirect or perform any other action upon success
+       
       } else {
         console.error('Failed to create workout plan');
-        // Handle error cases
+   
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      // Handle error cases
+    
     }
   };
+
+
+
+  const handleChange = (e)=>{
+    const {id,value}=e.target
+    setData({...data,[id]:value})
+  }
 
   return (
     <PlanCreationContainer>
@@ -97,19 +99,19 @@ const WorkoutPlanCreation = () => {
       <Form>
         <FormGroup>
           <Label>Plan Name:</Label>
-          <Input type="text" value={planName} onChange={(e) => setPlanName(e.target.value)} />
+          <Input type="text" id="planName"  onChange={handleChange}/>
         </FormGroup>
         <FormGroup>
           <Label>Goal:</Label>
-          <Input type="text" value={goal} onChange={(e) => setGoal(e.target.value)} />
+          <Input type="text" id="goal" onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Duration:</Label>
-          <Input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
+          <Input type="number" id="duration" onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Description:</Label>
-          <TextArea value={description} onChange={(e) => setDescription(e.target.value)} />
+          <TextArea id="description" onChange={handleChange} />
         </FormGroup>
         <Button onClick={handleCreatePlan}>Create Workout Plan</Button>
       </Form>

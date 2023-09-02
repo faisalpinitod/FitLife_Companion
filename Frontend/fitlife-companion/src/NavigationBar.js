@@ -27,6 +27,9 @@ const NavigationBar = () => {
       <StyledNavLink to="/user-profile">
         <FontAwesomeIcon icon={faUser} /> User Profile
       </StyledNavLink>
+      <StyledNavLink to="/user-login">
+        <FontAwesomeIcon icon={faChartLine} /> Login
+      </StyledNavLink>
       <StyledNavLink to="/TrainerProfile">
         <FontAwesomeIcon icon={faIdCard} /> Trainer Profile
       </StyledNavLink>
@@ -45,7 +48,7 @@ const NavigationBar = () => {
       <StyledNavLink to="/progress-tracking">
         <FontAwesomeIcon icon={faChartLine} /> Progress Tracking
       </StyledNavLink>
-      
+     
      
      
       {/* Add more NavLink components for other routes */}

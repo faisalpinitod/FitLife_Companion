@@ -53,48 +53,40 @@ const Button = styled.button`
 `;
 
 const UserProfile = () => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [email, setEmail] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
+  const [data,setData]=useState()
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      name,
-      age,
-      gender,
-      height,
-      weight,
-      email,
-      contactNumber,
-    };
-
     try {
-      const response = await fetch('http://localhost:8000/user/createUser', {
+      const response = await fetch('http://localhost:8000/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         console.log('User profile created successfully');
-        // You can redirect or perform any other action upon success
+        
       } else {
         console.error('Failed to create user profile');
-        // Handle error cases
+  
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      // Handle error cases
+      
     }
   };
+
+  const handleChange = (e)=>{
+    const {id,value}=e.target
+    setData({...data,[id]:value})
+  }
+
+
+
 
   return (
     <UserProfileContainer>
@@ -102,15 +94,15 @@ const UserProfile = () => {
       <Form>
         <FormGroup>
           <Label>Name:</Label>
-          <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input type="text" id="name"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Age:</Label>
-          <Input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+          <Input type="number" id="age"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Gender:</Label>
-          <Select value={gender} onChange={(e) => setGender(e.target.value)}>
+          <Select id="gender" onChange={handleChange}>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -118,19 +110,23 @@ const UserProfile = () => {
         </FormGroup>
         <FormGroup>
           <Label>Height:</Label>
-          <Input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
+          <Input type="number" id="height" onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Weight:</Label>
-          <Input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+          <Input type="number" id="weight"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Email:</Label>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input type="email" id="email"  onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Contact Number:</Label>
-          <Input type="text" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} />
+          <Input type="text" id="contactNumber"  onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Password:</Label>
+          <Input type="password" id="password"  onChange={handleChange} />
         </FormGroup>
         <Button onClick={handleSaveProfile}>Save Profile</Button>
       </Form>

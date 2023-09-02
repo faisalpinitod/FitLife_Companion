@@ -1,82 +1,137 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const TrainerCardContainer = styled.div`
-  border: 1px solid #ddd;
+const UserProfileContainer = styled.div`
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 15px;
-  margin: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const TrainerInfo = styled.div`
-  flex: 1;
-  padding-right: 15px;
+const Title = styled.h2`
+  font-size: 24px;
+  margin-bottom: 20px;
 `;
 
-const TrainerName = styled.h3`
-  margin: 0;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
 `;
 
-const TrainerSpecialization = styled.p`
-  color: #777;
+const FormGroup = styled.div`
+  margin-bottom: 20px;
 `;
 
-const TrainerExperience = styled.p`
-  color: #777;
+const Label = styled.label`
+  font-size: 16px;
+  margin-bottom: 8px;
 `;
 
-const TrainerContact = styled.p`
-  color: #777;
+const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+const Select = styled.select`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
-const EnrollButton = styled.button`
+const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
 `;
 
-const TrainerCard = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+const UserProfile = () => {
+  const [data,setData]=useState()
 
-const TrainerProfile = () => {
-  const [trainers, setTrainers] = useState([]);
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    // Fetch trainer data from the API
-    fetch('http://localhost:8000/trainer/trainers')
-      .then((response) => response.json())
-      .then((data) => setTrainers(data))
-      .catch((error) => console.error('Error fetching trainers:', error));
-  }, []);
+    try {
+      const response = await fetch('http://localhost:8000/trainer/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log('Trainer profile created successfully');
+        
+      } else {
+        console.error('Failed to create user profile');
+  
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      
+    }
+  };
+
+  const handleChange = (e)=>{
+    const {id,value}=e.target
+    setData({...data,[id]:value})
+  }
+
+
+
+
+  
+
 
   return (
-    <div>
-      <h2>Trainer Profiles</h2>
-      <div>
-        {trainers.map((trainer) => (
-          <TrainerCardContainer key={trainer._id}>
-            <TrainerInfo>
-              <TrainerName>{trainer.name}</TrainerName>
-              <TrainerSpecialization>Specialization: {trainer.specialization}</TrainerSpecialization>
-              <TrainerExperience>Experience: {trainer.experience} years</TrainerExperience>
-              <TrainerContact>Contact Number: {trainer.contactNumber}</TrainerContact>
-            </TrainerInfo>
-            <EnrollButton>Enroll</EnrollButton>
-          </TrainerCardContainer>
-        ))}
-      </div>
-    </div>
+    <UserProfileContainer>
+      <Title>Trainer Profile</Title>
+      <Form>
+        <FormGroup>
+          <Label>Name:</Label>
+          <Input type="text" id="name"  onChange={handleChange} />
+        </FormGroup>
+        
+        <FormGroup>
+          <Label>Gender:</Label>
+          <Select id="gender" onChange={handleChange}>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </Select>
+        </FormGroup>
+        <FormGroup>
+          <Label>specialization:</Label>
+          <Input type="text" id="specialization" onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>experience:</Label>
+          <Input type="number" id="experience"  onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Email:</Label>
+          <Input type="email" id="email"  onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Contact Number:</Label>
+          <Input type="text" id="contactNumber"  onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Password:</Label>
+          <Input type="password" id="password"  onChange={handleChange} />
+        </FormGroup>
+        <Button onClick={handleSaveProfile}>Save Profile</Button>
+      </Form>
+    </UserProfileContainer>
   );
 };
 
-export default TrainerProfile;
+export default UserProfile;

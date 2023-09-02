@@ -7,10 +7,35 @@ const {authenticateTrainer}=require("../middleware/trainerAuth")
 
 const workoutPlanRouter = express.Router();
 
+
+// planName: {
+//   type: String,
+//   required: true,
+// },
+// goal: {
+//   type: String,
+//   required: true,
+// },
+// duration: {
+//   type: Number,
+//   required: true,
+// },
+// description: {
+//   type: String,
+//   required: true,
+// },
+// trainerId: {
+//   type: mongoose.Schema.Types.ObjectId,
+//   ref: 'Trainer', 
+//   // required: true,
+// },
+
 // Create a new workout plan
-workoutPlanRouter.post('/workoutPlans',authenticateTrainer, async (req, res) => {
+workoutPlanRouter.post('/createPlan',authenticateTrainer, async (req, res) => {
   try {
-    const workoutPlan = new WorkoutPlan(req.body);
+    const trainerId=req.trainerId
+    const {planName,goal,duration,description}=req.body
+    const workoutPlan = new WorkoutPlan({planName,goal,duration,description,trainerId});
     const savedWorkoutPlan = await workoutPlan.save();
     res.status(201).json(savedWorkoutPlan);
   } catch (error) {

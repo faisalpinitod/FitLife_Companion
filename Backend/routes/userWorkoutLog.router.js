@@ -1,13 +1,40 @@
 const express = require('express');
 const userWorkoutLogRouter = express.Router();
 const { UserWorkoutLog } = require('../models/userworkout.model');
+const { authenticateUser } = require('../middleware/userAuth');
+
+
+// date: {
+//   type: Date,
+//   required: true,
+// },
+// workoutPlanId: {
+//   type: mongoose.Schema.Types.ObjectId,
+//   ref: 'WorkoutPlan', 
+//   required: true,
+// },
+// exercises: {
+//   type: String,
+//   required: true,
+// },
+// duration: {
+//   type: Number,
+//   required: true,
+// },
+// userId: {
+//   type: mongoose.Schema.Types.ObjectId,
+//   ref: 'User', 
+//   required: true,
+// },
 
 // Create a new user workout log entry
-userWorkoutLogRouter.post('/userWorkoutLogs', async (req, res) => {
+userWorkoutLogRouter.post('/userWorkoutLogs',authenticateUser, async (req, res) => {
   try {
-    const newUserWorkoutLog = new UserWorkoutLog(req.body);
+    const userId=req.userId
+    const {date , workoutPlanId,exercises,duration}=req.body
+    const newUserWorkoutLog = new UserWorkoutLog({date , workoutPlanId,exercises,duration,userId});
     const savedUserWorkoutLog = await newUserWorkoutLog.save();
-    res.json(savedUserWorkoutLog);
+    res.status(201).json(savedUserWorkoutLog);
   } catch (error) {
     res.status(400).json({ error: 'Error creating user workout log' });
   }
