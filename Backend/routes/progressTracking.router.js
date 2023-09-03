@@ -2,11 +2,15 @@ const express = require('express');
 const progressTrackingRouter = express.Router();
 const { ProgressTracking } = require('../models/progress.model');
 
+const { authenticateUser } = require('../middleware/userAuth');
+
 // Create a new progress tracking entry
 
-progressTrackingRouter.post('/progressTracking', async (req, res) => {
+progressTrackingRouter.post('/trackProgress',authenticateUser, async (req, res) => {
+  const{date,weight,bodyMeasurements,notes}=req.body
   try {
-    const newProgressTracking = new ProgressTracking(req.body);
+    const userId=req.userId
+    const newProgressTracking = new ProgressTracking({date,weight,bodyMeasurements,notes,userId});
     const savedProgressTracking = await newProgressTracking.save();
     res.json(savedProgressTracking);
   } catch (error) {
@@ -15,11 +19,11 @@ progressTrackingRouter.post('/progressTracking', async (req, res) => {
 });
 
 // Get all progress tracking entries for a user
-progressTrackingRouter.get('/progressTracking/:userId', async (req, res) => {
+progressTrackingRouter.get('/getProgressData',authenticateUser, async (req, res) => {
 
   const { userId } = req.params;
   try {
-    const progressTrackingEntries = await ProgressTracking.find({ userId });
+    const progressTrackingEntries = await ProgressTracking.find();
     res.json(progressTrackingEntries);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching progress tracking entries' });

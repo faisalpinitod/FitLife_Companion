@@ -1,11 +1,14 @@
 const express = require('express');
 const fitnessGoalRouter = express.Router();
 const { FitnessGoal } = require('../models/fitnessgoal.model');
+const { authenticateUser } = require('../middleware/userAuth');
 
 // Create a new fitness goal
-fitnessGoalRouter.post('/fitnessGoals', async (req, res) => {
+fitnessGoalRouter.post('/goal',authenticateUser, async (req, res) => {
+  const userId=req.userId
+  const {goalType,target,timeline}=req.body
   try {
-    const newFitnessGoal = new FitnessGoal(req.body);
+    const newFitnessGoal = new FitnessGoal({goalType,target,timeline,userId});
     const savedFitnessGoal = await newFitnessGoal.save();
     res.json(savedFitnessGoal);
   } catch (error) {
@@ -14,7 +17,8 @@ fitnessGoalRouter.post('/fitnessGoals', async (req, res) => {
 });
 
 // Get all fitness goals
-fitnessGoalRouter.get('/fitnessGoals', async (req, res) => {
+fitnessGoalRouter.get('/goal', async (req, res) => {
+  const userId=req.userId
   try {
     const fitnessGoals = await FitnessGoal.find();
     res.json(fitnessGoals);

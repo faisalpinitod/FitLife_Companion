@@ -28,7 +28,7 @@ app.use('/nutritionPlan', nutritionPlanRouter);
 app.use('/userWorkoutLog', userWorkoutLogRouter);
 app.use('/userNutritionLog', userNutritionLogRouter);
 app.use('/fitnessGoal', fitnessGoalRouter);
-app.use('/progressTracking', progressTrackingRouter);
+app.use('/progress', progressTrackingRouter);
 
 app.listen(8000, async () => {
   try {

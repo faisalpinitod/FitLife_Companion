@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import "./style/goal.css"
+import './style/goal.css';
 
 const GoalSetting = () => {
-  const [goalType, setGoalType] = useState('');
-  const [target, setTarget] = useState('');
-  const [timeline, setTimeline] = useState('');
+  const [data, setData] = useState({
+    goalType: '',
+    target: '',
+    timeline: '',
+  });
   const [goals, setGoals] = useState([]);
-
+  
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setData({ ...data, [id]: value });
+  };
+  
   const handleSetGoal = async (e) => {
     e.preventDefault();
-
-    const formData = {
-      goalType,
-      target,
-      timeline,
-    };
-
+    
     try {
-      const response = await fetch('http://localhost:8000/goal/setGoal', {
+      const authTokenUser = localStorage.getItem('authTokenUser');
+      const response = await fetch('http://localhost:8000/fitnessGoal/goal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': authTokenUser,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
-
+  
       if (response.ok) {
+        fetchGoals();
         console.log('Fitness goal set successfully');
-        // You can redirect or perform any other action upon success
+        alert('Goal created!');
       } else {
         console.error('Failed to set fitness goal');
         // Handle error cases
@@ -37,25 +41,34 @@ const GoalSetting = () => {
       // Handle error cases
     }
   };
-
+  
   const fetchGoals = async () => {
     try {
-      const response = await fetch('http://localhost:8000/goal/getGoals');
+      const authTokenUser = localStorage.getItem('authTokenUser');
+      const response = await fetch('http://localhost:8000/fitnessGoal/goal', {
+        method: 'GET',
+        headers: {
+          'Authorization': authTokenUser,
+        },
+      });
+  
       if (response.ok) {
         const data = await response.json();
         setGoals(data);
       } else {
-        console.error('Failed to fetch goals');
+        console.error('Failed to fetch goals:', response.status, response.statusText);
+        // Handle error cases
       }
     } catch (error) {
       console.error('An error occurred while fetching goals:', error);
+      // Handle error cases
     }
   };
-
+  
   useEffect(() => {
     fetchGoals();
   }, []);
-
+  
   return (
     <div className="goal-setting-container">
       <h2 className="goal-setting-title">Fitness Goal Setting</h2>
@@ -66,8 +79,8 @@ const GoalSetting = () => {
           </label>
           <select
             id="goalType"
-            value={goalType}
-            onChange={(e) => setGoalType(e.target.value)}
+            value={data.goalType}
+            onChange={handleChange}
             className="form-select"
           >
             <option value="">Select</option>
@@ -83,8 +96,8 @@ const GoalSetting = () => {
           <input
             type="text"
             id="target"
-            value={target}
-            onChange={(e) => setTarget(e.target.value)}
+            value={data.target}
+            onChange={handleChange}
             className="form-input"
           />
         </div>
@@ -95,8 +108,8 @@ const GoalSetting = () => {
           <input
             type="text"
             id="timeline"
-            value={timeline}
-            onChange={(e) => setTimeline(e.target.value)}
+            value={data.timeline}
+            onChange={handleChange}
             className="form-input"
           />
         </div>
@@ -104,18 +117,25 @@ const GoalSetting = () => {
           Set Goal
         </button>
       </form>
-
+  
       <div className="goal-cards-container">
-      <h2 className="goal-setting-title">My Goals</h2>
-
-        {goals.map((goal, index) => (
-          <div className="goal-card" key={index}>
-            <h3>Goal Type: {goal.goalType}</h3>
-            <p>Target: {goal.target}</p>
-            <p>Timeline: {goal.timeline}</p>
-          </div>
-        ))}
+        <h2 className="goal-setting-title">My Goals</h2>
+        <div className="goal-cards">
+          {goals.map((goal) => (
+            <GoalCard key={goal.id} goal={goal} />
+          ))}
+        </div>
       </div>
+    </div>
+  );
+};
+
+const GoalCard = ({ goal }) => {
+  return (
+    <div className="goal-card">
+      <h3>Goal Type: {goal.goalType}</h3>
+      <p>Target: {goal.target}</p>
+      <p>Timeline: {goal.timeline}</p>
     </div>
   );
 };

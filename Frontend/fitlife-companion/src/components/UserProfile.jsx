@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './style/userProfile.css'; // Import your CSS file
-
+import { Link,useNavigate } from 'react-router-dom';
 const UserProfile = () => {
   const [data, setData] = useState({});
-
+  const navigate = useNavigate();
   const handleSaveProfile = async (e) => {
     e.preventDefault();
 
@@ -19,6 +19,7 @@ const UserProfile = () => {
       if (response.ok) {
         console.log('User profile created successfully');
         alert("User profile created successfully")
+        navigate("/user-login")
       } else {
         console.error('Failed to create user profile');
       }
