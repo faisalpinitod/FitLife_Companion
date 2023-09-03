@@ -1,119 +1,143 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import './style/userWorkout.css';
+import { useParams } from 'react-router-dom';
 
-const LogsContainer = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
+function WorkoutLogs() {
+  const {id}=useParams()
+  const params=new URLSearchParams(window.location.search)
+  const plan=params.get("plan")
+  console.log(plan)
 
-const Title = styled.h2`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
+  const [data, setData] = useState({
+    date: '',
+    selectedPlan: plan,
+    exercises: '',
+    duration: '',
+    workoutPlanId:id
+  });
 
-const FormGroup = styled.div`
-  margin-bottom: 20px;
-`;
-
-const Label = styled.label`
-  font-size: 16px;
-  margin-bottom: 8px;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const TextArea = styled.textarea`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-const WorkoutLogs = () => {
-  const [data, setData] = useState('');
+  const [logs, setLogs] = useState([]);
+  const authTokenUser = localStorage.getItem('authTokenUser');
+  const fetchLogs=()=>{
+    fetch('http://localhost:8000/userWorkoutLog/user',{
+      method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authTokenUser,
+        },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLogs(data);
+      })
+      .catch((error) => console.error('Error fetching logs data:', error));
+  }
+  useEffect(() => {
+    // Fetch logs data from the API
+    fetchLogs()
+    
+  }, []);
 
   const handleLogEntry = async (e) => {
     e.preventDefault();
 
-    
-
     try {
-      const response = await fetch('http://localhost:8000/log/createLog', {
+      const authTokenUser = localStorage.getItem('authTokenUser');
+      console.log(authTokenUser)
+      const response = await fetch('http://localhost:8000/userWorkoutLog/createlog', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': authTokenUser,
         },
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
         console.log('Log entry created successfully');
-    
+        // Fetch updated logs after creating a new entry
+        fetchLogs()
       } else {
+        alert("You are not authorized! Please login first!")
         console.error('Failed to create log entry');
-    
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      
     }
   };
 
 
-  const handleChange = (e)=>{
-    const {id,value}=e.target
-    setData({...data,[id]:value})
-  }
-
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setData({ ...data, [id]: value });
+    console.log(data)
+  };
 
   return (
-    <LogsContainer>
-      <Title>Workout and Nutrition Logs</Title>
-      <Form>
-        <FormGroup>
-          <Label>Date:</Label>
-          <Input type="date" id="date"  onChange={handleChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Selected Plan:</Label>
-          <Input type="text"  onChange={handleChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Exercises/Meals:</Label>
-          <TextArea id="exercises" onChange={handleChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Duration/Caloric Intake:</Label>
-          <Input type="text" id="duration"  onChange={handleChange} />
-        </FormGroup>
-        <Button onClick={handleLogEntry}>Log Entry</Button>
-      </Form>
-    </LogsContainer>
+    <div className="logs-container">
+      <h2 className="logs-title">Workout and Nutrition Logs</h2>
+      <form className="logs-form">
+        <div className="form-group">
+          <label htmlFor="date" className="form-label">
+            Date:
+          </label>
+          <input
+            type="date"
+            id="date"
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="selectedPlan" className="form-label">
+            Selected Plan:
+          </label>
+          <input
+            type="text"
+            id="selectedPlan"
+            value={plan}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="exercisesMeals" className="form-label">
+            Exercises/Meals:
+          </label>
+          <textarea
+            id="exercises"
+            onChange={handleChange}
+            className="form-textarea"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="durationCaloricIntake" className="form-label">
+            Duration/Caloric Intake:
+          </label>
+          <input
+            type="text"
+            id="duration"
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+        <button onClick={handleLogEntry} className="form-button">
+          Log Entry
+        </button>
+      </form>
+      <div className="logs-card-container">
+        {logs.map((log, index) => (
+          <div key={index} className="log-card">
+            <h3>Date: {log.date}</h3>
+            <p>Selected Plan: {log.selectedPlan}</p>
+            <p>Exercises/Meals: {log.exercises}</p>
+            <p>Duration/Caloric Intake: {log.duration}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
-};
+}
 
 export default WorkoutLogs;

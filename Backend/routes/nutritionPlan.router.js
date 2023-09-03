@@ -1,11 +1,14 @@
 const express = require('express');
 const nutritionPlanRouter = express.Router();
 const { NutritionPlan } = require('../models/nutrition.model');
+const { authenticateTrainer } = require('../middleware/trainerAuth');
 
 // Create a new nutrition plan
-nutritionPlanRouter.post('/nutritionPlans', async (req, res) => {
+nutritionPlanRouter.post('/createPlan',authenticateTrainer, async (req, res) => {
+  const trainerId=req.trainerId
+  const {planName,goal,duration,guidelines,workoutPlanId}=req.body
   try {
-    const newNutritionPlan = new NutritionPlan(req.body);
+    const newNutritionPlan = new NutritionPlan({planName,goal,duration,guidelines,workoutPlanId,trainerId});
     const savedNutritionPlan = await newNutritionPlan.save();
     res.json(savedNutritionPlan);
   } catch (error) {
@@ -14,7 +17,7 @@ nutritionPlanRouter.post('/nutritionPlans', async (req, res) => {
 });
 
 // Get all nutrition plans
-nutritionPlanRouter.get('/nutritionPlans', async (req, res) => {
+nutritionPlanRouter.get('/plan', async (req, res) => {
   try {
     const nutritionPlans = await NutritionPlan.find();
     res.json(nutritionPlans);

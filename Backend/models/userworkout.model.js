@@ -24,6 +24,9 @@ const userWorkoutLogSchema =  mongoose.Schema({
     ref: 'User', 
     required: true,
   },
+  selectedPlan:{
+    type:String,
+  }
 });
 
 const UserWorkoutLog = mongoose.model('UserWorkoutLog', userWorkoutLogSchema);

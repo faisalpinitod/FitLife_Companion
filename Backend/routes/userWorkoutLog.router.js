@@ -4,35 +4,12 @@ const { UserWorkoutLog } = require('../models/userworkout.model');
 const { authenticateUser } = require('../middleware/userAuth');
 
 
-// date: {
-//   type: Date,
-//   required: true,
-// },
-// workoutPlanId: {
-//   type: mongoose.Schema.Types.ObjectId,
-//   ref: 'WorkoutPlan', 
-//   required: true,
-// },
-// exercises: {
-//   type: String,
-//   required: true,
-// },
-// duration: {
-//   type: Number,
-//   required: true,
-// },
-// userId: {
-//   type: mongoose.Schema.Types.ObjectId,
-//   ref: 'User', 
-//   required: true,
-// },
-
 // Create a new user workout log entry
-userWorkoutLogRouter.post('/userWorkoutLogs',authenticateUser, async (req, res) => {
+userWorkoutLogRouter.post('/createlog',authenticateUser, async (req, res) => {
   try {
     const userId=req.userId
-    const {date , workoutPlanId,exercises,duration}=req.body
-    const newUserWorkoutLog = new UserWorkoutLog({date , workoutPlanId,exercises,duration,userId});
+    const {date ,workoutPlanId,exercises,duration,selectedPlan}=req.body
+    const newUserWorkoutLog = new UserWorkoutLog({date , workoutPlanId,exercises,duration,userId,selectedPlan});
     const savedUserWorkoutLog = await newUserWorkoutLog.save();
     res.status(201).json(savedUserWorkoutLog);
   } catch (error) {
@@ -40,21 +17,14 @@ userWorkoutLogRouter.post('/userWorkoutLogs',authenticateUser, async (req, res) 
   }
 });
 
-// Get all user workout logs
-userWorkoutLogRouter.get('/userWorkoutLogs', async (req, res) => {
-  try {
-    const userWorkoutLogs = await UserWorkoutLog.find();
-    res.json(userWorkoutLogs);
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching user workout logs' });
-  }
-});
 
-// Get a user workout log by ID
-userWorkoutLogRouter.get('/userWorkoutLogs/:id', async (req, res) => {
-  const { id } = req.params;
+userWorkoutLogRouter.get('/user',authenticateUser, async (req, res) => {
+
+  const userId=req.userId
   try {
-    const userWorkoutLog = await UserWorkoutLog.findById(id);
+ 
+    const userWorkoutLog = await UserWorkoutLog.find({userId:userId}).exec();
+    
     if (!userWorkoutLog) {
       return res.status(404).json({ error: 'User workout log not found' });
     }
@@ -63,6 +33,9 @@ userWorkoutLogRouter.get('/userWorkoutLogs/:id', async (req, res) => {
     res.status(500).json({ error: 'Error fetching user workout log' });
   }
 });
+
+
+
 
 // Update a user workout log by ID
 userWorkoutLogRouter.patch('/userWorkoutLogs/:id', async (req, res) => {

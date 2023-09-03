@@ -1,62 +1,11 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-
-const GoalSettingContainer = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h2`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 20px;
-`;
-
-const Label = styled.label`
-  font-size: 16px;
-  margin-bottom: 8px;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Select = styled.select`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
+import React, { useState, useEffect } from 'react';
+import "./style/goal.css"
 
 const GoalSetting = () => {
   const [goalType, setGoalType] = useState('');
   const [target, setTarget] = useState('');
   const [timeline, setTimeline] = useState('');
+  const [goals, setGoals] = useState([]);
 
   const handleSetGoal = async (e) => {
     e.preventDefault();
@@ -89,30 +38,85 @@ const GoalSetting = () => {
     }
   };
 
+  const fetchGoals = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/goal/getGoals');
+      if (response.ok) {
+        const data = await response.json();
+        setGoals(data);
+      } else {
+        console.error('Failed to fetch goals');
+      }
+    } catch (error) {
+      console.error('An error occurred while fetching goals:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
   return (
-    <GoalSettingContainer>
-      <Title>Fitness Goal Setting</Title>
-      <Form>
-        <FormGroup>
-          <Label>Goal Type:</Label>
-          <Select value={goalType} onChange={(e) => setGoalType(e.target.value)}>
+    <div className="goal-setting-container">
+      <h2 className="goal-setting-title">Fitness Goal Setting</h2>
+      <form className="goal-setting-form">
+        <div className="form-group">
+          <label htmlFor="goalType" className="form-label">
+            Goal Type:
+          </label>
+          <select
+            id="goalType"
+            value={goalType}
+            onChange={(e) => setGoalType(e.target.value)}
+            className="form-select"
+          >
             <option value="">Select</option>
             <option value="Weight Loss">Weight Loss</option>
             <option value="Muscle Gain">Muscle Gain</option>
             <option value="Endurance">Endurance</option>
-          </Select>
-        </FormGroup>
-        <FormGroup>
-          <Label>Target:</Label>
-          <Input type="text" value={target} onChange={(e) => setTarget(e.target.value)} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Timeline:</Label>
-          <Input type="text" value={timeline} onChange={(e) => setTimeline(e.target.value)} />
-        </FormGroup>
-        <Button onClick={handleSetGoal}>Set Goal</Button>
-      </Form>
-    </GoalSettingContainer>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="target" className="form-label">
+            Target:
+          </label>
+          <input
+            type="text"
+            id="target"
+            value={target}
+            onChange={(e) => setTarget(e.target.value)}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="timeline" className="form-label">
+            Timeline:
+          </label>
+          <input
+            type="text"
+            id="timeline"
+            value={timeline}
+            onChange={(e) => setTimeline(e.target.value)}
+            className="form-input"
+          />
+        </div>
+        <button onClick={handleSetGoal} className="form-button">
+          Set Goal
+        </button>
+      </form>
+
+      <div className="goal-cards-container">
+      <h2 className="goal-setting-title">My Goals</h2>
+
+        {goals.map((goal, index) => (
+          <div className="goal-card" key={index}>
+            <h3>Goal Type: {goal.goalType}</h3>
+            <p>Target: {goal.target}</p>
+            <p>Timeline: {goal.timeline}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

@@ -27,15 +27,16 @@ const NavigationBar = () => {
       {/* <StyledNavLink to="/user-profile">
         <FontAwesomeIcon icon={faUser} /> User Profile
       </StyledNavLink> */}
-      <StyledNavLink to="/workout-plan">
-        <FontAwesomeIcon icon={faDumbbell} /> Workout Plan
+       <StyledNavLink to="/">
+        <FontAwesomeIcon icon={faIdCard} /> Home
       </StyledNavLink>
+      {/* <StyledNavLink to="/workout-plan">
+        <FontAwesomeIcon icon={faDumbbell} /> Workout Plan
+      </StyledNavLink> */}
       <StyledNavLink to="/user-login">
         <FontAwesomeIcon icon={faUser} /> Login
       </StyledNavLink>
-      {/* <StyledNavLink to="/TrainerProfile">
-        <FontAwesomeIcon icon={faIdCard} /> Trainer Profile
-      </StyledNavLink> */}
+     
       <StyledNavLink to="/GoalSetting">
         <FontAwesomeIcon icon={faBullseye} /> Goal Setting
       </StyledNavLink>
@@ -43,9 +44,9 @@ const NavigationBar = () => {
       {/* <StyledNavLink to="/WorkoutLog">
         <FontAwesomeIcon icon={faClipboardList} /> Workout Log
       </StyledNavLink> */}
-      <StyledNavLink to="/nutritionplancreation">
+      {/* <StyledNavLink to="/nutritionplancreation">
         <FontAwesomeIcon icon={faAppleAlt} /> Nutrition Plan
-      </StyledNavLink>
+      </StyledNavLink> */}
       <StyledNavLink to="/progress-tracking">
         <FontAwesomeIcon icon={faChartLine} /> Progress Tracking
       </StyledNavLink>

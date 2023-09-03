@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './style/workoutPlan.css';
 
 const WorkoutPlanCreation = () => {
@@ -137,7 +138,7 @@ const WorkoutPlanCard = ({ plan }) => {
       <p>Goal: {plan.goal}</p>
       <p>Duration: {plan.duration}</p>
       <p>Description: {plan.description}</p>
-      <button className="select-plan-button">Select Plan</button>
+      <Link to={`/nutritionplancreation/${plan._id}?plan=${plan.planName}`}><button className="select-plan-button">Select Plan</button></Link>
     </div>
   );
 };

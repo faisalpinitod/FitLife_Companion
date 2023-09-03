@@ -8,27 +8,6 @@ const {authenticateTrainer}=require("../middleware/trainerAuth")
 const workoutPlanRouter = express.Router();
 
 
-// planName: {
-//   type: String,
-//   required: true,
-// },
-// goal: {
-//   type: String,
-//   required: true,
-// },
-// duration: {
-//   type: Number,
-//   required: true,
-// },
-// description: {
-//   type: String,
-//   required: true,
-// },
-// trainerId: {
-//   type: mongoose.Schema.Types.ObjectId,
-//   ref: 'Trainer', 
-//   // required: true,
-// },
 
 // Create a new workout plan
 workoutPlanRouter.post('/createPlan',authenticateTrainer, async (req, res) => {
