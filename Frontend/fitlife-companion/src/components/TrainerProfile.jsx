@@ -18,6 +18,7 @@ const UserProfile = () => {
 
       if (response.ok) {
         console.log('Trainer profile created successfully');
+        alert("Trainer profile created successfully")
       } else {
         console.error('Failed to create trainer profile');
       }

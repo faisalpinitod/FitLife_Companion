@@ -18,6 +18,7 @@ const UserProfile = () => {
 
       if (response.ok) {
         console.log('User profile created successfully');
+        alert("User profile created successfully")
       } else {
         console.error('Failed to create user profile');
       }

@@ -1,0 +1,44 @@
+
+
+ nav {
+    background-color: #2d2d2d;
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }  
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    border: 1px solid transparent;
+  }
+  
+  li a:hover {
+    background-color: #3f3f3f;
+    border-color: #3182d6;
+  }
+  
+  /* FontAwesome icons */
+  li a svg {
+    margin-right: 10px; 
+    font-size: 20px; 
+  }  

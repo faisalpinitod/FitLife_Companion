@@ -45,10 +45,10 @@ function Home() {
     
      
     
-      const handleChange = (e) => {
-        const { id, value } = e.target;
-        setData({ ...data, [id]: value });
-      };
+    //   const handleChange = (e) => {
+    //     const { id, value } = e.target;
+    //     setData({ ...data, [id]: value });
+    //   };
     
       return (
         <div className="plan-creation-container">

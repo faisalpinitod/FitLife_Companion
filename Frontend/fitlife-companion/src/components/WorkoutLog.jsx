@@ -3,29 +3,28 @@ import './style/userWorkout.css';
 import { useParams } from 'react-router-dom';
 
 function WorkoutLogs() {
-  const {id}=useParams()
-  const params=new URLSearchParams(window.location.search)
-  const plan=params.get("plan")
-  console.log(plan)
-
+  const { id } = useParams();
+  const params = new URLSearchParams(window.location.search);
+  const plan = params.get("plan");
 
   const [data, setData] = useState({
     date: '',
     selectedPlan: plan,
     exercises: '',
     duration: '',
-    workoutPlanId:id
+    workoutPlanId: id
   });
 
   const [logs, setLogs] = useState([]);
   const authTokenUser = localStorage.getItem('authTokenUser');
-  const fetchLogs=()=>{
-    fetch('http://localhost:8000/userWorkoutLog/user',{
+
+  const fetchLogs = () => {
+    fetch('http://localhost:8000/userWorkoutLog/user', {
       method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authTokenUser,
-        },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authTokenUser,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -33,10 +32,10 @@ function WorkoutLogs() {
       })
       .catch((error) => console.error('Error fetching logs data:', error));
   }
+
   useEffect(() => {
     // Fetch logs data from the API
-    fetchLogs()
-    
+    fetchLogs();
   }, []);
 
   const handleLogEntry = async (e) => {
@@ -44,7 +43,6 @@ function WorkoutLogs() {
 
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      console.log(authTokenUser)
       const response = await fetch('http://localhost:8000/userWorkoutLog/createlog', {
         method: 'POST',
         headers: {
@@ -57,7 +55,7 @@ function WorkoutLogs() {
       if (response.ok) {
         console.log('Log entry created successfully');
         // Fetch updated logs after creating a new entry
-        fetchLogs()
+        fetchLogs();
       } else {
         alert("You are not authorized! Please login first!")
         console.error('Failed to create log entry');
@@ -67,11 +65,9 @@ function WorkoutLogs() {
     }
   };
 
-
   const handleChange = (e) => {
     const { id, value } = e.target;
     setData({ ...data, [id]: value });
-    console.log(data)
   };
 
   return (
@@ -86,7 +82,7 @@ function WorkoutLogs() {
             type="date"
             id="date"
             onChange={handleChange}
-            className="form-input"
+            className="input-box"
           />
         </div>
         <div className="form-group">
@@ -98,7 +94,7 @@ function WorkoutLogs() {
             id="selectedPlan"
             value={plan}
             onChange={handleChange}
-            className="form-input"
+            className="input-box"
           />
         </div>
         <div className="form-group">
@@ -108,7 +104,7 @@ function WorkoutLogs() {
           <textarea
             id="exercises"
             onChange={handleChange}
-            className="form-textarea"
+            className="input-box"
           />
         </div>
         <div className="form-group">
@@ -119,10 +115,10 @@ function WorkoutLogs() {
             type="text"
             id="duration"
             onChange={handleChange}
-            className="form-input"
+            className="input-box"
           />
         </div>
-        <button onClick={handleLogEntry} className="form-button">
+        <button onClick={handleLogEntry} className="log-button">
           Log Entry
         </button>
       </form>
