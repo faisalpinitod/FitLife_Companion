@@ -9,7 +9,7 @@ const { userWorkoutLogRouter } = require('./routes/userWorkoutLog.router');
 const { userNutritionLogRouter } = require('./routes/userNutritionLog.router');
 const { fitnessGoalRouter } = require('./routes/fitnessGoal.router');
 const { progressTrackingRouter } = require('./routes/progressTracking.router');
-
+require('dotenv').config();
 
 const app = express();
 

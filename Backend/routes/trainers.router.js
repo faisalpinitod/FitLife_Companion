@@ -4,10 +4,10 @@ const express=require("express")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {Trainer}=require('../models/trainers.model')
-
+require('dotenv').config();
 const trainerRouter=express.Router()
 
-
+const secretKey = process.env.SECRET_KEY;
 
 
 trainerRouter.post('/signup', async (req, res) => {
@@ -41,7 +41,7 @@ trainerRouter.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Authentication failed' });
     }
 
-    const token = jwt.sign({ trainerId: trainer._id }, 'secret_key');
+    const token = jwt.sign({ trainerId: trainer._id }, secretKey);
 
     res.status(201).json({ "message":"Login Successful",token });
   } catch (error) {

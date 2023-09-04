@@ -1,6 +1,8 @@
 const mongoose=require("mongoose")
+require('dotenv').config();
 
-const connection=mongoose.connect("mongodb+srv://Faisalpinitod:faisal@cluster0.y2f7t.mongodb.net/fitlifeCompanion?retryWrites=true&w=majority")
+const mongoURI = process.env.MONGO_URI;
+const connection=mongoose.connect(mongoURI)
 
 
 module.exports={
