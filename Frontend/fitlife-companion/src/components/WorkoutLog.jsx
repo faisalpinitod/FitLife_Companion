@@ -19,7 +19,7 @@ function WorkoutLogs() {
   const authTokenUser = localStorage.getItem('authTokenUser');
 
   const fetchLogs = () => {
-    fetch('http://localhost:8000/userWorkoutLog/user', {
+    fetch('https://fitlife-companion11.onrender.com/userWorkoutLog/user', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ function WorkoutLogs() {
 
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      const response = await fetch('http://localhost:8000/userWorkoutLog/createlog', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/userWorkoutLog/createlog', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

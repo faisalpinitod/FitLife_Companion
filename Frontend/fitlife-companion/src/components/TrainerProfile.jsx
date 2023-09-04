@@ -8,7 +8,7 @@ const UserProfile = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/trainer/signup', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/trainer/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

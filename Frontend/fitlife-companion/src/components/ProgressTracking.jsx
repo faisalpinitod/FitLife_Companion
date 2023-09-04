@@ -20,7 +20,7 @@ const ProgressTracking = () => {
 
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      const response = await fetch('http://localhost:8000/progress/trackProgress', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/progress/trackProgress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const ProgressTracking = () => {
   const fetchProgressData = async () => {
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      const response = await fetch('http://localhost:8000/progress/getProgressData', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/progress/getProgressData', {
         method: 'GET',
         headers: {
           'Authorization': authTokenUser,

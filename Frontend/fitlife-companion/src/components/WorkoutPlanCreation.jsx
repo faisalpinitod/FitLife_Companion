@@ -24,7 +24,7 @@ const WorkoutPlanCreation = () => {
   async function fetchWorkoutPlans() {
     try {
       const authTokenTrainer = localStorage.getItem('authTokentrainer');
-      const response = await fetch('http://localhost:8000/workoutPlan/workoutPlans', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/workoutPlan/workoutPlans', {
         method: 'GET',
         headers: {
           Authorization: authTokenTrainer,
@@ -52,7 +52,7 @@ const WorkoutPlanCreation = () => {
 
     try {
       const authTokenTrainer = localStorage.getItem('authTokentrainer');
-      const response = await fetch('http://localhost:8000/workoutPlan/createPlan', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/workoutPlan/createPlan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

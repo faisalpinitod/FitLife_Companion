@@ -19,7 +19,7 @@ function Home() {
       async function fetchWorkoutPlans() {
         try {
        
-          const response = await fetch('http://localhost:8000/workoutPlan/workoutPlans', {
+          const response = await fetch('https://fitlife-companion11.onrender.com/workoutPlan/workoutPlans', {
             method: 'GET',
             headers: {
             //   Authorization: authTokenTrainer,

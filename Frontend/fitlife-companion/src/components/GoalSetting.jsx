@@ -19,7 +19,7 @@ const GoalSetting = () => {
     
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      const response = await fetch('http://localhost:8000/fitnessGoal/goal', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/fitnessGoal/goal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const GoalSetting = () => {
   const fetchGoals = async () => {
     try {
       const authTokenUser = localStorage.getItem('authTokenUser');
-      const response = await fetch('http://localhost:8000/fitnessGoal/goal', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/fitnessGoal/goal', {
         method: 'GET',
         headers: {
           'Authorization': authTokenUser,

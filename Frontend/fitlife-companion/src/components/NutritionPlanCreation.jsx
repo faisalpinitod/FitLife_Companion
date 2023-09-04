@@ -29,7 +29,7 @@ const NutritionPlanCreation = () => {
   async function fetchNutritionPlans() {
     try {
       const authTokenTrainer = localStorage.getItem('authTokentrainer');
-      const response = await fetch('http://localhost:8000/nutritionPlan/plan', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/nutritionPlan/plan', {
         method: 'GET',
         headers: {
           Authorization: authTokenTrainer,
@@ -57,7 +57,7 @@ const NutritionPlanCreation = () => {
 
     try {
       const authTokenTrainer = localStorage.getItem('authTokentrainer');
-      const response = await fetch('http://localhost:8000/nutritionPlan/createPlan', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/nutritionPlan/createPlan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

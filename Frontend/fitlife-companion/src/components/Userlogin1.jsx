@@ -17,7 +17,7 @@ function UserLogin1() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/user/login', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ function UserLogin1() {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:8000/trainer/login', {
+      const response = await fetch('https://fitlife-companion11.onrender.com/trainer/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
