@@ -83,4 +83,4 @@ Before you can run the FitLife Companion React.js frontend, make sure you have t
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/fitlife-companion-frontend.git
+   git clone https://github.com/faisalpinitod/FitLife_Companion-frontend.git
