@@ -69,8 +69,9 @@ Before you can run the FitLife Companion React.js frontend, make sure you have t
    ```bash
    git clone https://github.com/faisalpinitod/FitLife_Companion.git
 
+# Backend
 
-# API Endpoints
+## API Endpoints
 
 ## Trainers
 
