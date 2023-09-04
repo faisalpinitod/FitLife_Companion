@@ -6,12 +6,12 @@ The **FitLife Companion** React.js frontend is a comprehensive health and wellne
 
 ## Table of Contents
 
-- [Introduction](##introduction)
-- [Key Features](##key-features)
-- [Entities](##entities)
-- [Getting Started](##getting-started)
-  - [Prerequisites](###prerequisites)
-  - [Installation](###installation)
+- [Introduction](#introduction)
+- [Key Features](#key-features)
+- [Entities](#entities)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
 - [Additional Features](#additional-features)
